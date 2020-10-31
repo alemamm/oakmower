@@ -23,10 +23,12 @@ Spatial AI allows for multimodal solutions. OAK-D makes Spatial AI and Embedded 
 
 ![OAKMower flowchart](oakmower_flow_chart.png)
 
-OAKMower uses three classifers:
-* Point Cloud
-* Disparity
-* Objects
+OAKMower uses three classifers for limit and obstacle detection:
+* Point Cloud ([Elliptic Envelope for Outlier Detection](https://scikit-learn.org/stable/modules/generated/sklearn.covariance.EllipticEnvelope.html))
+* Disparity ([Support Vector Machine](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html))
+* Objects ([Mobilenet-SSD for Object Detection](https://docs.luxonis.com/tutorials/openvino_model_zoo_pretrained_model/))
+
+Since for now control is out of scope, optical flow estimation was added to the pipeline to classify the movement of the robot.
 
 ## Setup
 
@@ -41,12 +43,22 @@ I used the parameters a, b, c and d
 
 ![Plane parameters](https://wikimedia.org/api/rest_v1/media/math/render/svg/5e85b2d4c03909f8388d6424de28d27870977972)
 
-describing the plane as well as the amount of points considered as inliers of the plane as features to classify the point cloud as representing a clear path or obstacle. We can assume that the parameters of big clear path planes follow a normal distribution whereas obstacles can be considered outliers. Therefore, I decided to go for [anomaly detection algorithms.](https://scikit-learn.org/stable/modules/outlier_detection.html) for my point cloud classifier.
+describing the plane as well as the amount of points considered as inliers of the plane as features to classify the point cloud as representing a clear path or obstacle. We can assume that the parameters of big clear path planes follow a normal distribution whereas obstacles can be considered outliers. Therefore, I decided to go for [anomaly detection algorithms](https://scikit-learn.org/stable/modules/outlier_detection.html) for the point cloud classifier.
 
 ## Filtered Disparity classification
-
 #### Idea
-The disparity/depth data is noisy and largely influenced by oclusions. Even assuming that outlier filtering is applied successfully, it will not be possible to tell if a flat area in front belongs to the lawn or plaster. This texture information
+The disparity/depth data is noisy and largely influenced by oclusions. Even assuming that outlier filtering is applied successfully, it will not be possible to tell if a flat area in front belongs to the lawn or plaster. Texture should be considered as well. Images combining both informations should allow for successful classification.
+#### Approach
+OpenCV implements a tunable [Weighted Least Squares disparity filter](https://docs.opencv.org/3.4/d9/d51/classcv_1_1ximgproc_1_1DisparityWLSFilter.html) to refine the results in half-occlusions and uniform areas. Luxonis also provides a stand-alone [WLS filter example](https://github.com/luxonis/depthai-experiments/tree/master/wls-filter). The filtered image is expected to look different when comparing flat/lawn areas to limits or obstacles.
+##### Issue: Minimum Depth
+Points below minimum depth will partially be filtered out. The remaining "holes" are present and look similar qualitatively on all images whereas the texture changes significantly in case of limits or obstacles.
+##### Issue: Noisy Absolute Values
+Even the WLS-filtered disparity still contains noise. To get grayscale invariance as well as translational invaariance, [local binary patterns](https://scikit-image.org/docs/dev/api/skimage.feature.html#skimage.feature.local_binary_pattern) were computed for the relevant image area and binned in a relative histogram serving as the input for a [Support Vector Machine](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html) classifier.
+
+###### Sidenote: Minimum Depth
+The [minimum depth](https://docs.luxonis.com/faq/#onboard-camera-minimum-depths) of the device depends on the camera baseline. In the case of the [OAK-D](https://docs.luxonis.com/products/bw1098obc/) used in this project the minimum depth was 0.689 meters. In my tests WLS filtering did a good job enhancing the results without needing the [extended disparity mode](https://docs.luxonis.com/faq/#extended_disparity) that is planned to be implemented in future DepthAI releases.
+###### Sidenote: Semantic Segmentation:
+Training and running a semantic segmentation model on the device on RGB images is a promising approach. However, the texture can also be seen in the mono camera stream and until the release of Gen2 the DepthAI API does not allow for inference of two models.
 
 This should give an overview of the solution. Use diagrams, flowcharts to explain the solution visually. If you reference papers, please provide links. 
 
