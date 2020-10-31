@@ -6,13 +6,13 @@ For detailed documentation check out the corresponding [page](https://alemamm.gi
 # Samples
 
 ## Object detected
-![OAKMower cockpit when approaching an object](images/object_sample_1200.png)
+![OAKMower cockpit when approaching an object](samples/object_sample_1200.png)
 
 ## Limit detected
-![OAKMower cockpit when approaching a limit](images/limit_sample_1200.png)
+![OAKMower cockpit when approaching a limit](samples/limit_sample_1200.png)
 
 ## Clear path
-![OAKMower cockpit when crossing flat area](images/flat_sample_1200.png)
+![OAKMower cockpit when crossing flat area](samples/flat_sample_1200.png)
 
 # Installation
 Simply clone or download the [DepthAI repository](https://github.com/luxonis/depthai) and follow the installation tutorial on the [Luxonis website](https://docs.luxonis.com).
