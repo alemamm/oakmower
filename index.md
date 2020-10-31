@@ -1,37 +1,26 @@
-## Welcome to GitHub Pages
+## Depth smoothing tests
 
-You can use the [editor on GitHub](https://github.com/alemamm/oakmower/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Weighted least squares filtering algorithm applied on OAK-D disparity stream:
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+![WLS filtering applied to indoor disparity](wls_filtering_disparity_indoor.png)
 
-### Markdown
+### Anomaly detection for segmented plane classifier
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+By intuition and observed behaviour of the plane segmentation while testing it indoors as well as outdoors I could assume that the parameters defining the plane in 3D should be represented by a Gaussian distribution (provided that the device is stable as well). Only if the RANSAC algorithm is not converging to similar results due to no significant portion of the point cloud containing a plane significant deviations are expected. Similarly, if no plane is detected, the amount of points contained in the algorithm's "best guess" plane will be low.
 
-```markdown
-Syntax highlighted code block
+This allowed me to try and evalute anomaly detection algorithms visually keeping the amount of points in the plane on the x-axes as an indicator of how much I can rely on that data point. The y-dimension in the plots represents the a, b, c and d parameters describing the orientation of the plane, respectively.
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
+Anomaly detection algorithms evaluated using unscaled default parameters:
 
-1. Numbered
-2. List
+![Anomaly detection algorithms evaluated using unscaled default parameters](anomaly_detection_defaults.png)
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
-```
+Anomaly detection algorithms evaluated using standard scaling and default parameters
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+![Anomaly detection algorithms evaluated using standard scaling and default parameters](anomaly_detection_stdscaler.png)
 
-### Jekyll Themes
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/alemamm/oakmower/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+](anomaly_detection_stdscaler_outlierfrac_0.15.png)
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+![Anomaly detection algorithms evaluated using standard scaling and outlier fraction 0.15](anomaly_detection_stdscaler_outlierfrac_0.15.png)
