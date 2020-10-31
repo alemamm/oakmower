@@ -1,14 +1,16 @@
-# Problem statement
+# Spatial AI for Limit and Obstacle Detection
+
+## Problem statement
 Lawn mowing is a time-consuming and tiring routine household task. In recent years it has become one of the main personal robot applications. But even high-end products still require the expensive installation of boundary wires to ensure that the robot stays on the lawn. However, even with sich wires limiting the lawn area, numerous problems can occur, including the bot
 * killing small animals such as hedgehogs,
-* hurting children,
+* hurting children, cats, dogs,
 * driving into molehills and
 * crashing into "unwired" obstacles such as trees.
 
 Proper abstacle detection for mowing bots can save lives, money and the bot itself. The aim is to prove that this can be achieved using the OpenCV AI Kit with Depth (OAK-D).
 
-# Problem description [1 - 2 pages]
-Explain the problem you are trying to solve in detail. You can borrow text and images from the original proposal.
+## Problem description
+Considering the importance of health and safety and the dangers posed by a lawn mower's cutting blades, any solution for limit and obstacle detection needs to be sufficiently robust. The most common approach today are boundary wires that need to be burried surrounding and thus limiting the lawn area. Any other obstacle is detected with contact sensors once the robot crashes into it. However, the robot will require some time to actually stop. If the obstacle is small, light or flat enough, the robot will not stop. As the number of lawn mower bots increases so do the stories about cut cattails, dead hedgehogs, etc. Click on the video below for an illustration of our bot's behaviour when encountering obstacles.
 
 [![Problem visualisation Youtube video](youtube_problem_visualization_600.png)](https://www.youtube.com/watch?v=kr37imhNvWI)
 
