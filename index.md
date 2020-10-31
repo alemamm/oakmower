@@ -1,26 +1,28 @@
-## Depth smoothing tests
+# Problem statement
+Lawn mowing is a time-consuming and tiring routine household task. In recent years it has become one of the main personal robot applications. But even high-end products still require the expensive installation of boundary wires to ensure that the robot stays on the lawn. However, even with sich wires limiting the lawn area, numerous problems can occur, including the bot
+* killing small animals such as hedgehogs,
+* hurting children,
+* driving into molehills and
+* crashing into "unwired" obstacles such as trees.
 
-Weighted least squares filtering algorithm applied on OAK-D disparity stream:
+Proper abstacle detection for mowing bots can save lives, money and the bot itself. The aim is to prove that this can be achieved using the OpenCV AI Kit with Depth (OAK-D).
 
-![WLS filtering applied to indoor disparity](wls_filtering_disparity_indoor.png)
+# Problem description [1 - 2 pages]
+Explain the problem you are trying to solve in detail. You can borrow text and images from the original proposal.
 
-### Anomaly detection for segmented plane classifier
+[![Problem visualisation Youtube video](youtube_problem_visualization_600.png)](https://www.youtube.com/watch?v=kr37imhNvWI)
 
-By intuition and observed behaviour of the plane segmentation while testing it indoors as well as outdoors I could assume that the parameters defining the plane in 3D should be represented by a Gaussian distribution (provided that the device is stable as well). Only if the RANSAC algorithm is not converging to similar results due to no significant portion of the point cloud containing a plane significant deviations are expected. Similarly, if no plane is detected, the amount of points contained in the algorithm's "best guess" plane will be low.
+# Implemented solutions [1 - 2 pages]
+This should give an overview of the solution. Use diagrams, flowcharts to explain the solution visually. If you reference papers, please provide links. 
 
-This allowed me to try and evalute anomaly detection algorithms visually keeping the amount of points in the plane on the x-axes as an indicator of how much I can rely on that data point. The y-dimension in the plots represents the a, b, c and d parameters describing the orientation of the plane, respectively.
+# Results [3 - 4 pages]
+Use as much space as you want to show as many results as you want. Link to generated videos if needed.  
 
+# Limitations [ 1 -2 paragraphs ]
+Conditions under which the solution does not work.
 
-Anomaly detection algorithms evaluated using unscaled default parameters:
+# Future work [0.5 - 1 page]
+Things that you could not complete because of time, budget, or other constraints. 
 
-![Anomaly detection algorithms evaluated using unscaled default parameters](anomaly_detection_defaults.png)
-
-
-Anomaly detection algorithms evaluated using standard scaling and default parameters
-
-![Anomaly detection algorithms evaluated using standard scaling and default parameters](anomaly_detection_stdscaler.png)
-
-
-](anomaly_detection_stdscaler_outlierfrac_0.15.png)
-
-![Anomaly detection algorithms evaluated using standard scaling and outlier fraction 0.15](anomaly_detection_stdscaler_outlierfrac_0.15.png)
+# References [0.5  - 1 page ]
+Acknowledge code you may have used from other repositories. Also, refer to papers you may have implemented. 
