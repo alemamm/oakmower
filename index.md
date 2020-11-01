@@ -114,9 +114,14 @@ Linear          |  RBF
 :-------------------------:|:----------------------:
 ![](SVC_linear_C_crossval_boxplots.png)  |  ![](SVC_rbf_C_crossval_boxplots.png)
 
+## OAKMower triple classifier cockpit
+
+Clear path           |  Approaching object       |  Approaching limit
+:-------------------------:|:-------------------------:|:-------------------------:
+![](flat_sample_1200.png)           |  ![](object_sample_1200.png)  |  ![](limit_sample_1200.png)
 
 
-Use as much space as you want to show as many results as you want. Link to generated videos if needed.  
+
 
 # Limitations [ 1 -2 paragraphs ]
 Conditions under which the solution does not work.
@@ -124,5 +129,5 @@ Conditions under which the solution does not work.
 # Future work [0.5 - 1 page]
 Things that you could not complete because of time, budget, or other constraints. 
 
-# References [0.5  - 1 page ]
-Acknowledge code you may have used from other repositories. Also, refer to papers you may have implemented. 
+# References
+You can follow the links provided in both text and code to learn more 
