@@ -128,10 +128,14 @@ Recording            |  Mower crashing into person (see below)
 :-------------------------:|:----------------------:
 ![](the_walk.gif)  |  ![](bot_approach.gif)
 
-#### Object classifier
+### Object classifier
 ![](cockpit_person_approach.gif)  
 
+### Point cloud and disparity classifier
+![](limit.gif)
 
+### Clear path
+![](clear_path.gif)
 
 # Limitations
 The device must be installed and oriented the same way as during training data collection for the point cloud classifier to perform as expected.
