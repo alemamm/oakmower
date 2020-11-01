@@ -138,6 +138,9 @@ Recording            |  Mower crashing into person (see below)
 ### Clear path
 ![](clear_path.gif)
 
+### Submission video
+[![Project submission Youtube video](submission_video.png)](https://youtu.be/GFok1euta-g)
+
 # Limitations
 The device must be installed and oriented the same way as during training data collection for the point cloud classifier to perform as expected.
 Sometimes the disparity classifier yields unexpected results. Most likely the labeled dataset was to small and a linear kernel and lower C parameter may have been the better choice to avoid potential overfitting.
@@ -149,7 +152,7 @@ So far the application has not been tested using the Raspberry Pi 4 host as init
 
 Once the second generation pipeline builder is released, the inference capabilities could be used for semantic segmentation adding a fourth obstacle classification option. This will require a dataset that should include different locations, weather, leaves, etc. Once this is dataset exists, the performance and suitability of the object detection model can also be improved significantly.
 
-To actually leverage the potential, a control interface is required.
+To actually leverage the potential, an interface for controlling the robot is required. Since the point cloud is already being calculated, trying to perform SLAM is also an option.
 
 # References
 You can follow the links provided directly in both text and code to learn more and find the scienific work behind it referenced there. Mainly check out:
