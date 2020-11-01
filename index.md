@@ -44,6 +44,7 @@ The point cloud obtained if enough free space is left in front of the bot should
 The device does not allow for streaming both disparity and depth. Also, that would be a waste of bandwdith and frame rate as depth can be calculated from disparity as explained [in the DepthAI FAQs](https://docs.luxonis.com/faq/#how-do-i-calculate-depth-from-disparity). Using the intrinsics from the calibration files, [a point cloud can be calculated using Open3D.](https://github.com/luxonis/depthai-experiments/tree/master/point-cloud-projection) The [plane can be segmented robustly and fast within few iterations of the RANSAC algorithm.](http://www.open3d.org/docs/release/python_api/open3d.geometry.PointCloud.html#open3d.geometry.PointCloud.segment_plane) This allows for real-time use on the host.
 
 #### Segmented plane inliers of point cloud
+
 Lawn           |  Limit       
 :-------------------------:|:----------------------:
 ![](planes_lawn.gif)           |  ![](planes_obstacle.gif)
