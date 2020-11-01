@@ -36,7 +36,7 @@ Live recording           |  OAK's view
 :-------------------------:|:----------------------:
 ![](recording.jpeg)           |  ![](oak_view.jpeg)
 
-## Point Cloud classification
+## Point cloud classification
 ### Idea
 The point cloud obtained if enough free space is left in front of the bot should contain a significant amount of points belonging to a plane. Parameters describing the position of that plane in space should be relatively constant, mainly influenced by uneven terrain and camera movement. More points contained in the plane should mean more free space and higher confidence.
 
@@ -54,7 +54,7 @@ I used the parameters a, b, c and d
 
 describing the plane as well as the amount of points considered as inliers of the plane as features to classify the point cloud as representing a clear path or obstacle. We can assume that the parameters of big clear path planes follow a normal distribution whereas obstacles can be considered outliers. Therefore, I decided to go for [anomaly detection algorithms](https://scikit-learn.org/stable/modules/outlier_detection.html) for the point cloud classifier.
 
-## Filtered Disparity classification
+## Filtered disparity classification
 ### Idea
 The disparity/depth data is noisy and largely influenced by oclusions. Even assuming that outlier filtering is applied successfully, it will not be possible to tell if a flat area in front belongs to the lawn or plaster. Texture should be considered as well. Images combining both informations should allow for successful classification.
 
@@ -64,17 +64,58 @@ Lawn           |  Plant limit       |  Edgy limit
 
 ### Approach
 OpenCV implements a tunable [Weighted Least Squares disparity filter](https://docs.opencv.org/3.4/d9/d51/classcv_1_1ximgproc_1_1DisparityWLSFilter.html) to refine the results in half-occlusions and uniform areas. Luxonis also provides a stand-alone [WLS filter example](https://github.com/luxonis/depthai-experiments/tree/master/wls-filter). The filtered image is expected to look different when comparing flat/lawn areas to limits or obstacles.
-##### Issue: Minimum Depth
+##### Issue: Minimum depth
 Points below minimum depth will partially be filtered out. The remaining "holes" are present and look similar qualitatively on all images whereas the texture changes significantly in case of limits or obstacles.
-##### Issue: Noisy Absolute Values
-Even the WLS-filtered disparity still contains noise. To get grayscale invariance as well as translational invaariance, [local binary patterns](https://scikit-image.org/docs/dev/api/skimage.feature.html#skimage.feature.local_binary_pattern) were computed for the relevant image area and binned in a relative histogram serving as the input for a [Support Vector Machine](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html) classifier.
+##### Issue: Noisy absolute values
+Even the WLS-filtered disparity still contains noise. To get grayscale invariance as well as translational invaariance, [local binary patterns](https://scikit-image.org/docs/dev/api/skimage.feature.html#skimage.feature.local_binary_pattern) were computed for the relevant image area and binned in a relative histogram serving as the input for a [Support Vector Machine](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html) classifier. [Here](https://www.pyimagesearch.com/2015/12/07/local-binary-patterns-with-python-opencv/) you can find a good hands-on explanation.
 
-###### Sidenote: Minimum Depth
+##### Sidenote: Minimum depth
 The [minimum depth](https://docs.luxonis.com/faq/#onboard-camera-minimum-depths) of the device depends on the camera baseline. In the case of the [OAK-D](https://docs.luxonis.com/products/bw1098obc/) used in this project the minimum depth was 0.689 meters. In my tests WLS filtering did a good job enhancing the results without needing the [extended disparity mode](https://docs.luxonis.com/faq/#extended_disparity) that is planned to be implemented in future DepthAI releases.
-###### Sidenote: Semantic Segmentation:
-Training and running a semantic segmentation model on the device on RGB images is a promising approach. However, the texture can also be seen in the mono camera stream and until the release of Gen2 the DepthAI API does not allow for inference of two models.
+##### Sidenote: Semantic segmentation:
+Training and running a semantic segmentation model on the device on RGB images is a promising approach. However, the texture can also be seen in the mono camera stream and until the release of the second generation pipeline builder the DepthAI API does not allow for inference of two models.
 
-# Results [3 - 4 pages]
+
+## Object classification
+### Idea
+Objects can be detected using the inference capabilities of OAK-D. If these are located in a pre-defined area of the image, the robot should stop and turn.
+
+### Approach
+The MobileNet-SSD model provided by DepthAI is optimized for fast inference and can prove the advantages of performing object detection for obstacle detection in addition to the other two classifiers.
+
+
+# Results
+
+## Feature evaluation & training
+
+### Point cloud classification
+
+As mentioned above, I assumed that due the nature of the data (stable if free lawn ahead with big deviations otherwise) the point cloud classifier can be based on [anomaly detection algorithms](https://scikit-learn.org/stable/modules/outlier_detection.html). This also allows for setting the contamination factor (relative amount of outliers) instead of labeling the data separately.
+Below you see the results for a, b, c and d parameters on the y-axes and the amount of segmented plane inlier points on the x-axes after standard scaling. Since we know that high amounts of points (high x values) indicate lawn areas, the results can be interpreted quite intuitively.
+When comparing the algorithms, I decided to use robust covariance as for my application.
+
+25% outliers           |  35% outliers       
+:-------------------------:|:----------------------:
+![](anomaly_detection_0.25.png)  |  ![](anomaly_detection_0.35.png)
+Prefered model since big planes should not be outliers
+
+The amount of outliers is not known, but the chosen percentage can be used to adjust the threshold of the respective point cloud classifier.
+
+### Filtered disparity classification
+
+In contrast to the point cloud classification, to train the disparity classifier, the dataset had to be labeled before training the Support Vector Machine. To make sure that the chosen features (non-rotation invariant uniform LBPs) would be suitable, I performed a dimensionality reduction using [t-SNE](https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html). Note that with different initializations get you different results. Still, the plots indicate that the selected features are suitable for separating the data (green for clear path - red for limit/obstacle). For uniform LBPs this was not the case.
+
+PCA initialization           |  Random initialization      
+:-------------------------:|:----------------------:
+![](nri_tsne_pca_42.png)  |  ![](nri_tsne_random_42.png)
+
+When training Support Vector Machines using different kernels and parameters I got the following results shown in box plots.
+
+Linear          |  RBF     
+:-------------------------:|:----------------------:
+![](SVC_linear_C_crossval_boxplots.png)  |  ![](SVC_rbf_C_crossval_boxplots.png)
+
+
+
 Use as much space as you want to show as many results as you want. Link to generated videos if needed.  
 
 # Limitations [ 1 -2 paragraphs ]
