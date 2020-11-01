@@ -114,7 +114,9 @@ Linear          |  RBF
 :-------------------------:|:----------------------:
 ![](SVC_linear_C_crossval_boxplots.png)  |  ![](SVC_rbf_C_crossval_boxplots.png)
 
-## OAKMower triple classifier cockpit
+## OAKMower in action
+
+### Cockpit samples
 
 Clear path           |  Approaching object       |  Approaching limit
 :-------------------------:|:-------------------------:|:-------------------------:
@@ -123,11 +125,23 @@ Clear path           |  Approaching object       |  Approaching limit
 
 
 
-# Limitations [ 1 -2 paragraphs ]
-Conditions under which the solution does not work.
+# Limitations
+The device must be installed and oriented the same way as during training data collection for the point cloud classifier to perform as expected.
+Sometimes the disparity classifier yields unexpected results. Most likely the labeled dataset was to small and a linear kernel and lower C parameter may have been the better choice to avoid potential overfitting.
+Robot control was out of scope for this project and the device does not yet have an IP67 housing.
 
-# Future work [0.5 - 1 page]
-Things that you could not complete because of time, budget, or other constraints. 
+# Future work
+So far the application has not been tested using the Raspberry Pi 4 host as initially planned since the laptop allowed for much more rapid changes while being outdoors. However, regarding computational power I do not expect problems.
+
+Once the second generation pipeline builder is released, the inference capabilities could be used for semantic segmentation adding a fourth obstacle classification option. This will require a dataset that should include different locations, weather, leaves, etc. Once this is dataset exists, the performance and suitability of the object detection model can also be improved significantly.
+
+To actually leverage the potential, a control interface is required.
 
 # References
-You can follow the links provided in both text and code to learn more 
+You can follow the links provided directly in both text and code to learn more and find the scienific work behind it referenced there. Mainly check out:
+* [OpenCV Weighted Least Squares disparity filter](https://docs.opencv.org/3.4/d9/d51/classcv_1_1ximgproc_1_1DisparityWLSFilter.html)
+* [DepthAI FAQs](https://docs.luxonis.com/faq/#how-do-i-calculate-depth-from-disparity)
+* [Plane segmentation in Open3D](http://www.open3d.org/docs/release/python_api/open3d.geometry.PointCloud.html#open3d.geometry.PointCloud.segment_plane)
+* [Elliptic Envelope for Outlier Detection](https://scikit-learn.org/stable/modules/generated/sklearn.covariance.EllipticEnvelope.html)
+* [Support Vector Machine](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html)
+* [t-distributed Stochastic Neighbor Embedding](https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html)
