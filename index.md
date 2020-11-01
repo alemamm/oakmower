@@ -124,13 +124,13 @@ Clear path           |  Approaching object       |  Approaching limit
 #### Video recording & frame rate
 The results were saved recording the screen as the robot was crossing the lawn. Noticable lags were caused by the host due to low battery and point cloud rendering.
  
-Recording            |  Mower crashing into person   
+Recording            |  Mower crashing into person (see below)   
 :-------------------------:|:----------------------:
 ![](the_walk.gif)  |  ![](bot_approach.gif)
 
-Recording             
-:---------------------:
-![](person_approach.gif)  
+#### Object classifier
+![](cockpit_person_approach.gif)  
+
 
 
 # Limitations
