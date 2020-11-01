@@ -93,10 +93,9 @@ As mentioned above, I assumed that due the nature of the data (stable if free la
 Below you see the results for a, b, c and d parameters on the y-axes and the amount of segmented plane inlier points on the x-axes after standard scaling. Since we know that high amounts of points (high x values) indicate lawn areas, the results can be interpreted quite intuitively.
 When comparing the algorithms, I decided to use robust covariance as for my application.
 
-25% outliers           |  35% outliers       
+25% outliers            |  35% outliers       
 :-------------------------:|:----------------------:
 ![](anomaly_detection_0.25.png)  |  ![](anomaly_detection_0.35.png)
-Prefered model since big planes should not be outliers
 
 The amount of outliers is not known, but the chosen percentage can be used to adjust the threshold of the respective point cloud classifier.
 
@@ -122,12 +121,22 @@ Clear path           |  Approaching object       |  Approaching limit
 :-------------------------:|:-------------------------:|:-------------------------:
 ![](flat_sample_1200.png)           |  ![](object_sample_1200.png)  |  ![](limit_sample_1200.png)
 
+#### Video recording & frame rate
+The results were saved recording the screen as the robot was crossing the lawn. Noticable lags were caused by the host due to low battery and point cloud rendering.
+ 
+Recording            |  Mower crashing into person   
+:-------------------------:|:----------------------:
+![](the_walk.gif)  |  ![](bot_approach.gif)
 
+Recording             
+:---------------------:
+![](person_approach.gif)  
 
 
 # Limitations
 The device must be installed and oriented the same way as during training data collection for the point cloud classifier to perform as expected.
 Sometimes the disparity classifier yields unexpected results. Most likely the labeled dataset was to small and a linear kernel and lower C parameter may have been the better choice to avoid potential overfitting.
+
 Robot control was out of scope for this project and the device does not yet have an IP67 housing.
 
 # Future work
