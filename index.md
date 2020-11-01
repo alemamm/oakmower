@@ -123,7 +123,7 @@ Clear path           |  Approaching object       |  Approaching limit
 ![](flat_sample_1200.png)           |  ![](object_sample_1200.png)  |  ![](limit_sample_1200.png)
 
 #### Video recording & frame rate
-The results were saved recording the screen as the robot was crossing the lawn. Noticable lags were caused by the host due to low battery and point cloud rendering.
+The results were saved recording the screen as the robot was crossing the lawn. Noticable lags were caused by the host due to the screen recording itself, point cloud rendering and if the battery was running low.
  
 Recording            |  Mower crashing into person (see below)   
 :-------------------------:|:----------------------:
@@ -140,6 +140,9 @@ Recording            |  Mower crashing into person (see below)
 
 ### Submission video
 [![Project submission Youtube video](submission_video.png)](https://youtu.be/GFok1euta-g)
+
+### Framerate
+[![Framerate test Youtube video](framerate_video.png)](https://youtu.be/Vb1pSQlJwiY)
 
 # Limitations
 The device must be installed and oriented the same way as during training data collection for the point cloud classifier to perform as expected.
