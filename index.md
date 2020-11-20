@@ -30,6 +30,8 @@ OAKMower uses three classifers for limit and obstacle detection:
 
 Since for now control is out of scope, optical flow estimation was added to the pipeline to classify the movement of the robot.
 
+## Solution video
+
 [![Project submission Youtube video](submission_video.png)](https://youtu.be/F1BLRJMhlLU)
 
 ## Setup
