@@ -7,7 +7,7 @@ Lawn mowing is a time-consuming and tiring routine household task. In recent yea
 * driving into molehills and
 * crashing into "unwired" obstacles such as trees.
 
-Proper abstacle detection for mowing bots can save lives, money and the bot itself. The aim is to prove that this can be achieved using the OpenCV AI Kit with Depth (OAK-D).
+Proper obstacle detection for mowing bots can save lives, money and the bot itself. The aim is to prove that this can be achieved using the OpenCV AI Kit with Depth (OAK-D).
 
 ## Problem description
 Considering the importance of health and safety and the dangers posed by a lawn mower's cutting blades, any solution for limit and obstacle detection needs to be sufficiently robust. The most common approach today are boundary wires that need to be burried surrounding and thus limiting the lawn area. Any other obstacle is detected with contact sensors once the robot crashes into it. However, the robot will require some time to actually stop. If the obstacle is small, light or flat enough, the robot will not stop. As the number of lawn mower bots increases so do the stories about cut cattails, dead hedgehogs, etc. Click on the video below for an illustration of our bot's behaviour when encountering obstacles.
@@ -29,6 +29,8 @@ OAKMower uses three classifers for limit and obstacle detection:
 * Objects ([Mobilenet-SSD for Object Detection](https://docs.luxonis.com/tutorials/openvino_model_zoo_pretrained_model/))
 
 Since for now control is out of scope, optical flow estimation was added to the pipeline to classify the movement of the robot.
+
+[![Project submission Youtube video](submission_video.png)](https://youtu.be/F1BLRJMhlLU)
 
 ## Setup
 
@@ -59,7 +61,7 @@ describing the plane as well as the amount of points considered as inliers of th
 ### Idea
 The disparity/depth data is noisy and largely influenced by oclusions. Even assuming that outlier filtering is applied successfully, it will not be possible to tell if a flat area in front belongs to the lawn or plaster. Texture should be considered as well. Images combining both informations should allow for successful classification.
 
-Lawn           |  Plant limit       |  Edgy limit
+Lawn           |  Edgy limit       |  Plant limit
 :-------------------------:|:-------------------------:|:-------------------------:
 ![](wls_lawn.png)           |  ![](wls_limit_1.png)  |  ![](wls_limit_2.png)
 
@@ -137,9 +139,6 @@ Recording            |  Mower crashing into person (see below)
 
 ### Clear path
 ![](clear_path.gif)
-
-### Submission video
-[![Project submission Youtube video](submission_video.png)](https://youtu.be/GFok1euta-g)
 
 ### Framerate
 [![Framerate test Youtube video](framerate_video.png)](https://youtu.be/Vb1pSQlJwiY)
