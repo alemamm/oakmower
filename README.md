@@ -1,6 +1,6 @@
 # OAKMower
 
-[OpenCV Spatial AI Competition Phase 1](https://opencv.org/announcing-the-opencv-spatial-ai-competition-sponsored-by-intel-phase-1-winners/) finalist project "Automatic Lawn Mower Navigation" aiming to utilize [OAK-D](https://www.kickstarter.com/projects/opencv/opencv-ai-kit) to enable multi-modal obstacle and limit detection using object detection and depth estimation and classification simultaneously.
+[OpenCV Spatial AI Competition Phase 1](https://opencv.org/announcing-the-opencv-spatial-ai-competition-sponsored-by-intel-phase-1-winners/) 3rd prize winner project "Automatic Lawn Mower Navigation" aiming to utilize [OAK-D](https://www.kickstarter.com/projects/opencv/opencv-ai-kit) to enable multi-modal obstacle and limit detection using object detection and depth estimation and classification simultaneously.
 For detailed documentation check out the corresponding [page](https://alemamm.github.io/oakmower/).
 
 # Samples
